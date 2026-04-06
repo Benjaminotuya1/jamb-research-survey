@@ -18,8 +18,8 @@
         .radio-group label { background: #f8f9fa; padding: 10px; border: 1px solid #ddd; border-radius: 4px; cursor: pointer; }
         .radio-group input[type="radio"] { margin-right: 10px; transform: scale(1.2); }
         .scale-group { display: flex; justify-content: space-between; background: #f8f9fa; padding: 10px; border-radius: 4px; border: 1px solid #ddd; }
-        .scale-item { text-align: center; }
-        .scale-item label { display: block; font-size: 12px; margin-top: 5px; }
+        .scale-item { text-align: center; cursor: pointer; display: flex; flex-direction: column; align-items: center; }
+        .scale-item span { display: block; font-size: 12px; margin-top: 5px; }
         .error-highlight { border: 2px solid #e74c3c; background-color: #fceceb; padding: 15px; border-radius: 5px; transition: 0.3s; }
         .btn-submit { width: 100%; padding: 15px; background-color: #27ae60; color: white; border: none; border-radius: 4px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 30px; }
         .btn-submit:hover { background-color: #219150; }
@@ -98,11 +98,11 @@
                     <div class="question">
                         <p>${index + 5}. ${q}</p>
                         <div class="scale-group">
-                            <div class="scale-item"><input type="radio" name="anx_${index}" value="1" required><label>1</label></div>
-                            <div class="scale-item"><input type="radio" name="anx_${index}" value="2"><label>2</label></div>
-                            <div class="scale-item"><input type="radio" name="anx_${index}" value="3"><label>3</label></div>
-                            <div class="scale-item"><input type="radio" name="anx_${index}" value="4"><label>4</label></div>
-                            <div class="scale-item"><input type="radio" name="anx_${index}" value="5"><label>5</label></div>
+                            <label class="scale-item"><input type="radio" name="anx_${index}" value="1" required><span>1</span></label>
+                            <label class="scale-item"><input type="radio" name="anx_${index}" value="2"><span>2</span></label>
+                            <label class="scale-item"><input type="radio" name="anx_${index}" value="3"><span>3</span></label>
+                            <label class="scale-item"><input type="radio" name="anx_${index}" value="4"><span>4</span></label>
+                            <label class="scale-item"><input type="radio" name="anx_${index}" value="5"><span>5</span></label>
                         </div>
                     </div>
                 `;
@@ -255,10 +255,11 @@
         fetch(APP_URL, {
             method: 'POST',
             mode: 'no-cors',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
             body: JSON.stringify(payload)
         }).then(() => {
             status.innerText = "Success! Your responses have been recorded.";
+            status.style.color = "#27ae60";
             btn.innerText = "SURVEY COMPLETED";
             document.getElementById('research-form').reset();
         }).catch(err => {
