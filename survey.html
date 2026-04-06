@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Research Survey</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f6f9; color: #333; margin: 0; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .header { text-align: center; border-bottom: 2px solid #2c3e50; padding-bottom: 20px; margin-bottom: 20px; }
+        .header h1 { color: #2c3e50; font-size: 24px; margin: 0; }
+        .header p { color: #555; font-size: 14px; margin-top: 10px; line-height: 1.5; }
+        .section-title { background-color: #2c3e50; color: white; padding: 10px; border-radius: 4px; margin-top: 30px; }
+        .question { margin-bottom: 25px; }
+        .question p { font-weight: bold; margin-bottom: 10px; }
+        input[type="text"], input[type="number"] { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 16px; box-sizing: border-box; }
+        .radio-group { display: flex; flex-direction: column; gap: 8px; }
+        .radio-group label { background: #f8f9fa; padding: 10px; border: 1px solid #ddd; border-radius: 4px; cursor: pointer; }
+        .radio-group input[type="radio"] { margin-right: 10px; transform: scale(1.2); }
+        .scale-group { display: flex; justify-content: space-between; background: #f8f9fa; padding: 10px; border-radius: 4px; border: 1px solid #ddd; }
+        .scale-item { text-align: center; }
+        .scale-item label { display: block; font-size: 12px; margin-top: 5px; }
+        .btn-submit { width: 100%; padding: 15px; background-color: #27ae60; color: white; border: none; border-radius: 4px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 30px; }
+        .btn-submit:hover { background-color: #219150; }
+        #status-msg { text-align: center; margin-top: 15px; font-weight: bold; color: #27ae60; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>Impact of Sleep and Anxiety on JAMB CBT Performance</h1>
+        <p>This survey is strictly for research purposes to understand how sleep and stress affect your preparation for the upcoming JAMB examination. It is completely anonymous. Please answer honestly. There are no right or wrong answers.</p>
+    </div>
+
+    <form id="research-form">
+        <div class="section-title">SECTION 1: Demographics & Study Habits</div>
+        
+        <div class="question">
+            <p>1. Student Identification Code:</p>
+            <input type="text" id="studentId" required placeholder="Enter your secret code">
+        </div>
+
+        <div class="question">
+            <p>2. What is your Gender?</p>
+            <div class="radio-group">
+                <label><input type="radio" name="gender" value="Male" required> Male</label>
+                <label><input type="radio" name="gender" value="Female"> Female</label>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>3. What is your Age?</p>
+            <div class="radio-group">
+                <label><input type="radio" name="age" value="14" required> 14</label>
+                <label><input type="radio" name="age" value="15"> 15</label>
+                <label><input type="radio" name="age" value="16"> 16</label>
+                <label><input type="radio" name="age" value="17"> 17</label>
+                <label><input type="radio" name="age" value="18"> 18</label>
+                <label><input type="radio" name="age" value="19+"> 19+</label>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>4. Average hours per day reading for JAMB outside of school?</p>
+            <div class="radio-group">
+                <label><input type="radio" name="studyHours" value="< 2 hours" required> Less than 2 hours</label>
+                <label><input type="radio" name="studyHours" value="2-4 hours"> 2 to 4 hours</label>
+                <label><input type="radio" name="studyHours" value="5-6 hours"> 5 to 6 hours</label>
+                <label><input type="radio" name="studyHours" value="7+ hours"> 7 hours or more</label>
+            </div>
+        </div>
+
+        <div class="section-title">SECTION 2: Westside Test Anxiety Scale</div>
+        <p style="font-size: 13px; color: #555;">Scale: 1 = Never true, 2 = Slightly true, 3 = Moderately true, 4 = Highly true, 5 = Always true</p>
+
+        <script>
+            const anxietyQuestions = [
+                "The closer I am to a major exam, the harder it is for me to concentrate.",
+                "I worry that I will not remember the material in the exam hall.",
+                "During important exams, I think that I am doing awfully or may fail.",
+                "I lose focus and cannot remember material I knew perfectly well.",
+                "I finally remember the answers after the exam is already over.",
+                "I worry so much I am too worn out to do my best on the exam.",
+                "I feel out of sorts or not really myself during important exams.",
+                "My mind goes blank at the beginning of an exam.",
+                "I jump into an exam so fast that I miss what the question is asking.",
+                "After an exam, I worry excessively about whether I did well enough."
+            ];
+
+            anxietyQuestions.forEach((q, index) => {
+                document.write(`
+                    <div class="question">
+                        <p>${index + 5}. ${q}</p>
+                        <div class="scale-group">
+                            <div class="scale-item"><input type="radio" name="anx_${index}" value="1" required><label>1</label></div>
+                            <div class="scale-item"><input type="radio" name="anx_${index}" value="2"><label>2</label></div>
+                            <div class="scale-item"><input type="radio" name="anx_${index}" value="3"><label>3</label></div>
+                            <div class="scale-item"><input type="radio" name="anx_${index}" value="4"><label>4</label></div>
+                            <div class="scale-item"><input type="radio" name="anx_${index}" value="5"><label>5</label></div>
+                        </div>
+                    </div>
+                `);
+            });
+        </script>
+
+        <div class="section-title">SECTION 3: Sleep Quality</div>
+        
+        <div class="question">
+            <p>15. Hours of ACTUAL sleep you get at night? (Number only)</p>
+            <input type="number" id="sleepHours" required placeholder="e.g. 5" min="0" max="24" step="0.5">
+        </div>
+
+        <button type="submit" class="btn-submit" id="submit-btn">SUBMIT SURVEY</button>
+        <p id="status-msg"></p>
+    </form>
+</div>
+
+<script>
+    // Injected your live Google Apps Script URL here
+    const APP_URL = "https://script.google.com/macros/s/AKfycbzBeEtz4eiqVTOFlOFYpRwPXAmG4DuAw3vcbh-gwtxtUryUxtth3lIyINQAlZDbKgZv/exec";
+
+    document.getElementById('research-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const btn = document.getElementById('submit-btn');
+        const status = document.getElementById('status-msg');
+        btn.disabled = true;
+        btn.innerText = "CALCULATING & SUBMITTING...";
+
+        // 1. Gather Demographics
+        const studentId = document.getElementById('studentId').value;
+        const gender = document.querySelector('input[name="gender"]:checked').value;
+        const age = document.querySelector('input[name="age"]:checked').value;
+        const studyHours = document.querySelector('input[name="studyHours"]:checked').value;
+
+        // 2. Calculate Anxiety Score
+        let anxietySum = 0;
+        for(let i = 0; i < 10; i++) {
+            anxietySum += parseInt(document.querySelector(`input[name="anx_${i}"]:checked`).value);
+        }
+        let anxietyScore = (anxietySum / 10).toFixed(1);
+        
+        let anxietyCategory = "";
+        if(anxietyScore < 2.0) anxietyCategory = "Comfortably low anxiety";
+        else if(anxietyScore <= 2.5) anxietyCategory = "Normal anxiety";
+        else if(anxietyScore <= 3.4) anxietyCategory = "Moderately high anxiety";
+        else anxietyCategory = "Extremely high anxiety";
+
+        // 3. Calculate Sleep Status
+        let sleepHours = parseFloat(document.getElementById('sleepHours').value);
+        let sleepStatus = (sleepHours < 6) ? "Severely Sleep Deprived" : "Adequate Sleep";
+
+        // 4. Build Payload
+        const payload = {
+            studentId, gender, age, studyHours,
+            anxietyScore, anxietyCategory,
+            sleepHours, sleepStatus
+        };
+
+        // 5. Send to Google Sheets
+        fetch(APP_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        }).then(() => {
+            status.innerText = "Success! Your responses have been recorded.";
+            btn.innerText = "SURVEY COMPLETED";
+            document.getElementById('research-form').reset();
+        }).catch(err => {
+            status.innerText = "Error saving data. Please check your connection.";
+            status.style.color = "red";
+            btn.disabled = false;
+            btn.innerText = "SUBMIT SURVEY";
+        });
+    });
+</script>
+
+</body>
+</html>
